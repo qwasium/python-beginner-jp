@@ -1,0 +1,9 @@
+{
+	// Black formatter
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter",
+		"editor.formatOnSave": true
+	},
+	// manually set local python virtual environment path
+	// "python.pythonPath": "../path/to/python/interpreter",
+}
