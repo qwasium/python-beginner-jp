@@ -6,6 +6,11 @@ Pythonは初心者向け言語だが、仮想環境だけは鬼門である。�
 
 想定する読者：Python初心者。外部ライブラリを`pip install`でインストールして、コード内で`import`して利用したことがある人。絶対パス、相対パスがわかる人。初心者向けなのでVSCodeを使っていることを前提とする。他のエディタの説明はしません。NeoVimとか使っている人は初心者じゃないと思うので。
 
+TODO
+
+- PEP668
+- VSCode extension: [Python Environment Manager](https://marketplace.visualstudio.com/items?itemName=donjayamanne.python-environment-manager)
+
 ## 環境
 
 このドキュメントはFeb.2024時点の環境で作成されている。以下の環境で動作確認を行っている。
@@ -263,14 +268,14 @@ OOP(オブジェクト指向)に慣れている人は、インストール済み
 
 ```bash
 # pythonインタープリター -m venv 仮想環境名
-Python3 -m venv env3
+python3 -m venv env3
 ```
 
 カレントディレクトリ内で`env3`という名前のフォルダーが作成される。このフォルダーが仮想環境である。`pip`でインストールするライブラリもこのフォルダー内にインストールされる。仮想環境はプラットフォーム間の互換性は無い。
 
 仮想環境を有効化するには仮想環境内の`activate`スクリプトを実行する。
 
-UNIX系では`/env3/bin/acitvate`を実行する。
+UNIX系では`env3/bin/acitvate`を実行する。
 
 ```bash
 # bash(Ubuntu) and zsh(MacOS)
