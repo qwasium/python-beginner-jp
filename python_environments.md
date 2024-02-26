@@ -15,11 +15,22 @@ TODO
 
 このドキュメントはFeb.2024時点の環境で作成されている。以下の環境で動作確認を行っている。
 
-Linux
+Ubuntu
 
 - Intel x86_64
 - Ubuntu 22.04
 - Python 3.10
+
+| alias | path | environment |
+| --- | --- | --- |
+| `python`  | na | na |
+| `python3` | `/usr/bin/python3`  | default Python 3.10 |
+| `pip`     | `~/.local/bin/pip`  | default Python 3.10 |
+| `pip3`    | `~/.local/bin/pip3` | default Python 3.10 |
+
+`python-is-python3`パッケージをインストールしていないデフォルト状態。
+
+`python`のエイリアスはデフォルトではPython2用に温存されている。
 
 MacOS
 
@@ -33,10 +44,12 @@ MacOS
 
 | alias | path | environment |
 | --- | --- | --- |
-| `python` | `/usr/bin/python3` | default Python3.9 |
+| `python`  | `/usr/bin/python3` | default Python3.9 |
 | `python3` | `/usr/bin/python3` | default Python3.9 |
-| `pip` | `/opt/homebrew/bin/pip` | homebrew Python3.11 |
-| `pip3` | `/usr/bin/pip3` | default Python3.9 |
+| `pip`     | `/opt/homebrew/bin/pip` | homebrew Python3.11 |
+| `pip3`    | `/usr/bin/pip3` | default Python3.9 |
+
+デフォルトPythonでは`pip`のエイリアスは無いので、別途定義しない限り、homebrew Pythonの`pip`になる。
 
 Windows
 
@@ -46,6 +59,13 @@ Windows
   - Python3.11
 - PsychoPy
   - Python3.8
+
+| alias | path | environment |
+| --- | --- | --- |
+| `python`  | `~\AppData\Local\Microsoft\WindowsApps\python.exe`  | Microsoft Store Python 3.11 |
+| `python3` | `~\AppData\Local\Microsoft\WindowsApps\python3.exe` | Microsoft Store Python 3.11 |
+| `pip`     | `~\AppData\Local\Microsoft\WindowsApps\pip.exe`  | Microsoft Store Python 3.11 |
+| `pip3`    | `~\AppData\Local\Microsoft\WindowsApps\pip3.exe` | Microsoft Store Python 3.11 |
 
 ## Pythonとは
 
@@ -131,6 +151,8 @@ which python3
 which pip
 which pip3
 ```
+
+Ubuntuでは`python-is-python3`パッケージを
 
 Windowsの場合は`gcm`（`Get-Command`）コマンドを使う。
 
@@ -331,41 +353,70 @@ Python環境のパスをプロジェクトディレクトリから見た相対�
 
 ## virtualenv + virtualenvwrapper
 
-仮想環境を管理するツール`venv`以外にも存在する。`virtualenv`はそれらを一元的に管理できるユニバーサルなツールである。
+仮想環境を管理するツール`venv`以外にも存在する。`virtualenv`それらを一元的に管理できるユニバーサルなツールである。venv登場前から存在していて人気も根強い。
 
 - `virtualenv`: 仮想環境管理ツール
 - `virtualenvwrapper`: マシン上の`virtualenv`仮想環境をひとつのフォルダー`~/.virtualenvs`にまとめるツール
 
 一回環境構築してしまえば使いやすいが、環境構築がめんどい。
 
-**重要**: `fish`は使えないのでコマンドの実行は`bash`または`zsh`を使うこと。もしくは[`VirtualFish`](https://github.com/justinmayer/virtualfish)を使う。
+**重要**:
 
-### virtualenvwrapper導入手順
-
-まず、メインとなるPythonインタープリターを決める。以下の例ではデフォルトを使っているが、必要に応じて適切なインタープリターに変える。
-
-`virtualenv`と`virtualenvwrapper`はPythonライブラリなのでpipでインストールする。そのあと、`virtualenvwrapper.sh`を`.bashrc`等に追加する。
-
-補足
-
-- `.bashrc`、`.zshrc`：シェルが起動するときに読み込まれる設定ファイル
+- `fish`は使えないのでコマンドの実行は`bash`または`zsh`を使うこと。もしくは[`VirtualFish`](https://github.com/justinmayer/virtualfish)を使う。
 - POSIX環境向けに作られているのでWindowsの場合は工夫が必要になる（後述）
 
-homebrewやaptでインストールすることもできるが、パスが違うので各自の環境にあわせて直すこと。同様に、`virtualenvwrapper`をインストールするときは`sudo`を使わない場合はパスが異なるので注意。自分でパスを確認して、わかってやっている限りは大丈夫です。
+おおまかな手順は
 
-[公式ドキュメント](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
+1. メインとなるPythonインタープリターを決める
+2. `pip install virtualenv`
+3. `sudo pip install vitualenvwrapper`
+4. `~/.bashrc`または`~/.zshrc`に設定を追加する
 
-#### Linux
+詳細は[virtualenvwrapper公式ドキュメント](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)参照。
 
-TODO
-
-#### MacOS
-
-インテルとアップルシリコンでディレクトリ構造が違うらしい。筆者はM1ユーザーでよくわからないので、Intel Macユーザーは適宜読み替えてほしい。
+### Linux導入手順
 
 [下記のコマンドを使ったマシンの環境は上記参照。](#環境)
 
-`virtualenv`と`virtualenvwrapper`をインストールする。
+`virtualenv`と`virtualenvwrapper`をpipでインストールする。
+
+```bash
+# Linux bash
+pip install virtualenv
+sudo pip install virtualenvwrapper # sudoを使わない場合はスクリプトのパスが違うので注意
+```
+
+`.bashrc`(シェルが起動するときに読み込まれる設定ファイル)に設定を追加する。
+
+```bash
+vim ~/.bashrc
+```
+
+```bash
+# ~/.bashrc
+# 末尾に追加
+
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs # 仮想環境のディレクトリ
+export PROJECT_HOME=$HOME/Devel
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh # 下記参照
+```
+
+補足：アクティベーションスクリプトの例
+
+- non-sudo pip: `~/.local/bin/virtualenvwrapper.sh`
+- sudo pip: `/usr/local/bin/virtualenvwrapper.sh`
+
+次：[VSCodeの設定](#vscodeで設定)へ
+
+### MacOS導入手順
+
+インテルとアップルシリコンでディレクトリ構造が違うらしい。
+筆者はM1ユーザーでよくわからないので、Intel Macユーザーは適宜読み替えてほしい。
+[下記のコマンドを使ったマシンの環境は上記参照。](#環境)
+
+`virtualenv`と`virtualenvwrapper`をpipでインストールする。
 
 ```zsh
 pip3 install virtualenv
@@ -374,7 +425,8 @@ sudo pip3 install virtualenvwrapper # sudoを使わない場合はスクリプ�
 
 `pip3`(sudoなし)で`virtualenvwrapper`をインストールしたあと、やっぱり`pip3`(sudoあり)でインストールしたい場合は一回アンインストールしてから`sudo`で再インストールすること。
 
-Macはデフォルトで`.zshrc`がないのでもし無ければ作る。
+`.zshrc`(シェルが起動するときに読み込まれる設定ファイル)に設定を追加する。
+Macはデフォルトで`.zshrc`がないのでもし無ければ新しく作る。
 
 ```zsh
 nano ~/.zshrc # コマンドをつかわずに手動で作っても良い
@@ -407,13 +459,18 @@ path=(
 export WORKON_HOME=$HOME/.virtualenvs # 仮想環境のディレクトリ
 export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-
-# homebrew: /opt/homebrew/bin/virtualenvwrapper.sh
-# non-sudo pip3: $HOME/Library/Python/3.9/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh # 下記参照
 ```
 
-#### Windows
+補足：アクティベーションスクリプトの例
+
+- homebrew: `/opt/homebrew/bin/virtualenvwrapper.sh`
+- non-sudo pip3: `$HOME/Library/Python/3.9/bin/virtualenvwrapper.sh`
+- sudo pip3: `/usr/local/bin/virtualenvwrapper.sh`
+
+次：[VSCodeの設定](#vscodeで設定)へ
+
+### Windows導入手順
 
 `virtualenvwrapper`はPOSIX環境向けに作られているので、Windowsで使うには工夫が必要である。
 
@@ -436,7 +493,9 @@ VSCodeの設定で`python.venvPath`を設定することで、VSCodeのPython環
 
 ### 使用例
 
-詳細は公式ドキュメントを参照。
+詳細は[virtualenvwrapper公式ドキュメント](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)を参照。
+
+**再掲: `fish`は使えないのでコマンドの実行は`bash`または`zsh`を使うこと。**
 
 FIXME:コマンドは多分正しいけど、ディレクトリに関してやオプション、フラグは間違いあるかも。
 
