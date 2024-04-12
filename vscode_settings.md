@@ -1,6 +1,5 @@
 # VSCode Settings Guide
 
-
 - VSCode extension: [Python Environment Manager](https://marketplace.visualstudio.com/items?itemName=donjayamanne.python-environment-manager)
 
 VSCodeではプロジェクトディレクトリ内の`.vscode/settings.json`に以下を追加することで、プロジェクトディレクトリ外のPython環境を選択できる。このファイルのレポジトリ内に例を用意しているので参照。

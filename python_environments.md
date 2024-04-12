@@ -590,3 +590,15 @@ TODO
 
 - venv    : "requirements.txt"
 - Anaconda: "(環境名).yml"
+
+## 開発者向け追加設定
+
+### Sphinx
+
+ドキュメント生成ツール`Sphinx`を使うと、Pythonプロジェクトのドキュメントを簡単に生成できる。
+
+TODO
+
+### SetupTools
+
+TODO
